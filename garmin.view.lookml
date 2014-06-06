@@ -5,10 +5,11 @@
     sql: ${TABLE}.Activity_Name
 
   - dimension: activity_type
-    sql: ${TABLE}.Activity_Type
+    sql: CASE WHEN ${TABLE}.Activity_Type = "Road Cycling" THEN "Cycling" WHEN ${TABLE}.Activity_Type = "Hiking" THEN "Running" WHEN ${TABLE}.Activity_Type = "Uncategorized" THEN "Running" ELSE ${TABLE}.Activity_Type END
+#     sql: ${TABLE}.Activity_Type
 
-  - dimension: ampm
-    sql: ${TABLE}.ampm
+#   - dimension: ampm
+#     sql: ${TABLE}.ampm
 
   - dimension: avg_hr
     sql: ${TABLE}.Avg_HR
@@ -17,17 +18,17 @@
     type: number
     sql: ${TABLE}."Avg_Speed(Avg Pace)"
 
-  - dimension: avg_strokes
-    sql: ${TABLE}.Avg_Strokes
-
-  - dimension: avg_swolf
-    sql: ${TABLE}.Avg_SWOLF
-
-  - dimension: best_efficiency
-    sql: ${TABLE}.Best_Efficiency
-
-  - dimension: best_swolf
-    sql: ${TABLE}.Best_SWOLF
+#   - dimension: avg_strokes
+#     sql: ${TABLE}.Avg_Strokes
+# 
+#   - dimension: avg_swolf
+#     sql: ${TABLE}.Avg_SWOLF
+# 
+#   - dimension: best_efficiency
+#     sql: ${TABLE}.Best_Efficiency
+# 
+#   - dimension: best_swolf
+#     sql: ${TABLE}.Best_SWOLF
 
   - dimension: calories
     sql: ${TABLE}.Calories
@@ -37,8 +38,8 @@
     timeframes: [time, date, week, month]
     sql: ${TABLE}.combidate
 
-  - dimension: course
-    sql: ${TABLE}.Course
+#   - dimension: course
+#     sql: ${TABLE}.Course
 
   - dimension_group: date
     type: time
@@ -55,8 +56,8 @@
   - dimension: elevation_gain
     sql: ${TABLE}.Elevation_Gain
 
-  - dimension: favorite
-    sql: ${TABLE}.Favorite
+#   - dimension: favorite
+#     sql: ${TABLE}.Favorite
 
   - dimension: max_hr
     sql: ${TABLE}.Max_HR
@@ -65,8 +66,8 @@
     type: number
     sql: ${TABLE}."Max_Speed(Best Pace)"
 
-  - dimension: min_strokes
-    sql: ${TABLE}.Min_Strokes
+#   - dimension: min_strokes
+#     sql: ${TABLE}.Min_Strokes
 
   - dimension: month
     sql: ${TABLE}.month
@@ -102,9 +103,17 @@
   - dimension: year
     sql: ${TABLE}.year
 
-  - measure: count
+  - measure: activities
     type: count
     detail: detail*
+    
+  - measure: total_calories
+    type: sum
+    sql: ${calories}
+    
+  - measure: total_distance
+    type: sum
+    sql: ${distance}
 
 
   # ----- Detail ------
